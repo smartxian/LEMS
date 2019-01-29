@@ -9,6 +9,7 @@
 .idea/*
 */.idea/*
 */.idea
+.idea
 *.iml
 *.iws
 
