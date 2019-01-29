@@ -12,6 +12,7 @@
 .idea
 *.iml
 *.iws
+*.eml
 
 # log
 logs/*
