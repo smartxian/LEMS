@@ -1,0 +1,17 @@
+/target/*
+/out/*
+.settings/
+.classpath
+.project
+*/.project
+*/.classpath
+
+.idea/*
+*.iml
+*.iws
+
+# log
+logs/*
+*.log
+
+Mybatis_generate.xml

@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.kehao.lems.dao.LabScheduleMapper">
+    <resultMap id="BaseResultMap" type="org.kehao.lems.entity.LabSchedule">
+        <id column="slid" jdbcType="CHAR" property="slid"/>
+        <result column="lid" jdbcType="CHAR" property="lid"/>
+        <result column="starttime" jdbcType="TIMESTAMP" property="starttime"/>
+        <result column="endtime" jdbcType="TIMESTAMP" property="endtime"/>
+        <result column="sname" jdbcType="VARCHAR" property="sname"/>
+        <result column="stel" jdbcType="VARCHAR" property="stel"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        slid, lid, starttime, endtime, sname, stel
+    </sql>
+
+    <resultMap id="LabSch_Lab_User_ResultMap" type="org.kehao.lems.entity.LabSchedule">
+        <id column="ls_slid" jdbcType="CHAR" property="slid"/>
+        <result column="ls_lid" jdbcType="CHAR" property="lid"/>
+        <result column="ls_starttime" jdbcType="TIMESTAMP" property="starttime"/>
+        <result column="ls_endtime" jdbcType="TIMESTAMP" property="endtime"/>
+        <result column="ls_sname" jdbcType="VARCHAR" property="sname"/>
+        <result column="ls_stel" jdbcType="VARCHAR" property="stel"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <association property="laboratory" javaType="org.kehao.lems.entity.Laboratory">
+            <!--<id column="lid" jdbcType="CHAR" property="lid"/>-->
+            <result column="l_id" jdbcType="VARCHAR" property="id"/>
+            <result column="l_lname" jdbcType="VARCHAR" property="lname"/>
+            <result column="l_lsize" jdbcType="INTEGER" property="lsize"/>
+            <result column="l_type" jdbcType="VARCHAR" property="type"/>
+            <result column="l_remark" jdbcType="VARCHAR" property="remark"/>
+            <result column="l_equcount" jdbcType="INTEGER" property="equcount"/>
+            <association property="user" javaType="org.kehao.lems.entity.User">
+                <!--<id column="uid" jdbcType="CHAR" property="uid"/>-->
+                <result column="u_uname" jdbcType="VARCHAR" property="uname"/>
+            </association>
+        </association>
+    </resultMap>
+    <sql id="LabSch_Lab_User_Column_List">
+        labs.slid ls_slid, labs.lid ls_lid, labs.starttime ls_starttime, labs.endtime ls_endtime, labs.sname ls_sname, labs.stel ls_stel,
+        lab.id l_id, lab.lname l_lname, lab.type l_type, lab.lsize l_lsize, lab.equcount l_equcount, lab.remark l_remark,
+        user.uname u_uname
+    </sql>
+
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from s_lab_schedule
+        where slid = #{slid,jdbcType=CHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        DELETE FROM s_lab_schedule
+        WHERE slid = #{slid,jdbcType=CHAR}
+    </delete>
+    <insert id="insert" parameterType="org.kehao.lems.entity.LabSchedule">
+        INSERT INTO s_lab_schedule (slid, lid, starttime, endtime, sname, stel, status)
+        VALUES (#{slid,jdbcType=CHAR}, #{lid,jdbcType=CHAR}, #{starttime,jdbcType=TIMESTAMP},
+                #{endtime,jdbcType=TIMESTAMP}, #{sname,jdbcType=VARCHAR}, #{stel,jdbcType=VARCHAR},
+                #{status,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" parameterType="org.kehao.lems.entity.LabSchedule">
+        insert into s_lab_schedule
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="slid != null">
+                slid,
+            </if>
+            <if test="lid != null">
+                lid,
+            </if>
+            <if test="starttime != null">
+                starttime,
+            </if>
+            <if test="endtime != null">
+                endtime,
+            </if>
+            <if test="sname != null">
+                sname,
+            </if>
+            <if test="stel != null">
+                stel,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="slid != null">
+                #{slid,jdbcType=CHAR},
+            </if>
+            <if test="lid != null">
+                #{lid,jdbcType=CHAR},
+            </if>
+            <if test="starttime != null">
+                #{starttime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endtime != null">
+                #{endtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="sname != null">
+                #{sname,jdbcType=VARCHAR},
+            </if>
+            <if test="stel != null">
+                #{stel,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="org.kehao.lems.entity.LabSchedule">
+        update s_lab_schedule
+        <set>
+            <if test="lid != null">
+                lid = #{lid,jdbcType=CHAR},
+            </if>
+            <if test="starttime != null">
+                starttime = #{starttime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endtime != null">
+                endtime = #{endtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="sname != null">
+                sname = #{sname,jdbcType=VARCHAR},
+            </if>
+            <if test="stel != null">
+                stel = #{stel,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+        </set>
+        where slid = #{slid,jdbcType=CHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="org.kehao.lems.entity.LabSchedule">
+        UPDATE s_lab_schedule
+        SET lid       = #{lid,jdbcType=CHAR},
+            starttime = #{starttime,jdbcType=TIMESTAMP},
+            endtime   = #{endtime,jdbcType=TIMESTAMP},
+            sname     = #{sname,jdbcType=VARCHAR},
+            stel      = #{stel,jdbcType=VARCHAR},
+            status    = #{status,jdbcType=INTEGER}
+        WHERE slid = #{slid,jdbcType=CHAR}
+    </update>
+
+    <select id="selectLabSchInfoByCondition" parameterType="java.util.Map" resultMap="LabSch_Lab_User_ResultMap">
+        select
+        <include refid="LabSch_Lab_User_Column_List"/>
+        from s_lab_schedule labs
+        left join s_laboratory lab on (labs.lid=lab.lid)
+        left join s_user user on(lab.uid=user.uid)
+        where labs.status != '1'
+        <if test="labScheduleEx.sname != null">
+            AND labs.sname LIKE concat(concat('%',#{labScheduleEx.sname,jdbcType=VARCHAR}),'%')
+        </if>
+        <if test="labScheduleEx.lname != null">
+            AND lab.lname LIKE concat(concat('%',#{labScheduleEx.lname,jdbcType=VARCHAR}),'%')
+        </if>
+        <if test="labScheduleEx.id != null">
+            AND lab.id LIKE concat(concat('%',#{labScheduleEx.id,jdbcType=VARCHAR}),'%')
+        </if>
+        <if test="labScheduleEx.type!=null">
+            AND lab.type LIKE concat(concat('%',#{labScheduleEx.type,jdbcType=VARCHAR}),'%')
+        </if>
+        <if test="sort!=null">
+            ORDER BY ${sort} ${order}
+        </if>
+        LIMIT #{startRec,jdbcType=INTEGER},#{recCount,jdbcType=INTEGER}
+    </select>
+    <select id="selectLabSchInfoByConditionCount" parameterType="java.util.Map" resultType="java.lang.Long">
+        select count(*)
+        from s_lab_schedule labs
+        left join s_laboratory lab on (labs.lid=lab.lid)
+        left join s_user user on(lab.uid=user.uid)
+        where labs.status != '1'
+        <if test="labScheduleEx.sname != null">
+            AND labs.sname LIKE concat(concat('%',#{labScheduleEx.sname,jdbcType=VARCHAR}),'%')
+        </if>
+        <if test="labScheduleEx.lname != null">
+            AND lab.lname LIKE concat(concat('%',#{labScheduleEx.lname,jdbcType=VARCHAR}),'%')
+        </if>
+        <if test="labScheduleEx.id != null">
+            AND lab.id LIKE concat(concat('%',#{labScheduleEx.id,jdbcType=VARCHAR}),'%')
+        </if>
+        <if test="labScheduleEx.type!=null">
+            AND lab.type LIKE concat(concat('%',#{labScheduleEx.type,jdbcType=VARCHAR}),'%')
+        </if>
+    </select>
+</mapper>
