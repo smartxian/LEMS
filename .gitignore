@@ -7,6 +7,8 @@
 */.classpath
 
 .idea/*
+*/.idea/*
+*/.idea
 *.iml
 *.iws
 
