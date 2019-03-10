@@ -434,8 +434,8 @@
     </div>
     <div data-options="region:'south',split:false,collapsible:false" style="height:75px;">
         <div style="text-align: center;margin-left: auto;margin-right: auto;margin-top: 10px">
-            <b>柯昊</b><br>
-            <b>西安工程大学·计算机科学学院</b><br>
+            <b>徐俏</b><br>
+            <b>福建师范大学：光电与信息工程学院</b><br>
             <b>暂无备案</b>
         </div>
     </div>
